@@ -7,7 +7,7 @@ import java.awt.event.*;
 
 public class ImagePanel extends JPanel
 {
-    Image image;
+    private Image image;
 
     public ImagePanel(Image image)
     {
@@ -15,7 +15,7 @@ public class ImagePanel extends JPanel
     }
 
     @Override
-    public void printComponents(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.printComponents(g);
         g.drawImage(image, 0, 0, null);
     }
