@@ -11,6 +11,11 @@ public class SafeCracker extends JFrame
     JPanel keyPanel = new JPanel();
     JTextField[] comboTextField = new JTextField[4];
     JButton[] keyButtons = new JButton[9];
+    JPanel optionsPanel = new JPanel();
+    ButtonGroup digitButtonGroup = new ButtonGroup();
+    JRadioButton twoDigitRadioButton = new JRadioButton();
+    JRadioButton threeDigitRadioButton = new JRadioButton();
+    JRadioButton fourDigitRadioButton = new JRadioButton();
     public SafeCracker()
     {
         setTitle("Safe Cracker");
@@ -81,6 +86,39 @@ public class SafeCracker extends JFrame
                 }
             });
         }
+
+        optionsPanel.setPreferredSize(new Dimension(200,100));
+        optionsPanel.setBorder(BorderFactory.createTitledBorder("Options:"));
+        optionsPanel.setLayout(new GridBagLayout());
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        getContentPane().add(optionsPanel, gridBagConstraints);
+
+        twoDigitRadioButton.setText("Two Digits and Combination");
+        twoDigitRadioButton.setSelected(true);
+        digitButtonGroup.add(twoDigitRadioButton);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        optionsPanel.add(twoDigitRadioButton, gridBagConstraints);
+
+        threeDigitRadioButton.setText("Three Digits and Combination");
+        digitButtonGroup.add(threeDigitRadioButton);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        optionsPanel.add(threeDigitRadioButton, gridBagConstraints);
+
+        fourDigitRadioButton.setText("Four Digits and Combination");
+        digitButtonGroup.add(fourDigitRadioButton);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = GridBagConstraints.WEST;
+        optionsPanel.add(fourDigitRadioButton, gridBagConstraints);
 
 
         pack();
