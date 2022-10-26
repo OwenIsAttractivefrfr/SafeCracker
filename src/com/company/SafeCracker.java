@@ -2,6 +2,7 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 
 
@@ -23,6 +24,12 @@ public class SafeCracker extends JFrame
     JScrollPane resultsPane = new JScrollPane();
     JTextArea resultsTextArea = new JTextArea();
     int numberofDigits;
+    String secretCombo;
+    Random random = new Random();
+    String enteredCombo;
+    int didgitsEntered;
+    int numberOfRight;
+    int positionOfRight;
 
     public SafeCracker()
     {
@@ -171,7 +178,7 @@ public class SafeCracker extends JFrame
         getContentPane().add(resultsPanel, gridBagConstraints);
 
         resultsTextArea.setEditable(false);
-        resultsTextArea.setBackground(Color.RED);
+        resultsTextArea.setBackground(Color.WHITE);
         resultsPane.setPreferredSize(new Dimension(180, 200));
         resultsPane.setViewportView(resultsTextArea);
         gridBagConstraints = new GridBagConstraints();
@@ -195,7 +202,59 @@ public class SafeCracker extends JFrame
 
     private void keyButtonAction(ActionEvent event)
     {
-
+        String n;
+        n = event.getActionCommand();
+        keyButtons[Integer.valueOf(n).intValue() - 1].setEnabled(false);
+        if(didgitsEntered == 0)
+        {
+            comboTextField[0].setText("");
+            comboTextField[1].setText("");
+            comboTextField[2].setText("");
+            comboTextField[3].setText("");
+        }
+        enteredCombo += n;
+        didgitsEntered++;
+        comboTextField[didgitsEntered - 1].setText(n);
+        if(didgitsEntered == numberofDigits)
+        {
+            for(int i = 0; i < 9; i++)
+            {
+                keyButtons[i].setEnabled(true);
+            }
+            resultsTextArea.append("Entered: " + enteredCombo + "\n");
+            if(enteredCombo.equals(secretCombo))
+            {
+                startStopButton.doClick();
+            }
+            else
+            {
+                numberOfRight = 0;
+                for(int i = 0; i < numberofDigits; i++)
+                {
+                    n = String.valueOf(enteredCombo.charAt(i));
+                    for(int j = 0; j < numberofDigits; j++)
+                    {
+                        if(n.equals(String.valueOf(secretCombo.charAt(j))))
+                        {
+                            numberOfRight++;
+                        }
+                    }
+                }
+                positionOfRight = 0;
+                for(int i = 0; i < numberofDigits; i++)
+                {
+                    if(secretCombo.charAt(i) == enteredCombo.charAt(i))
+                    {
+                        positionOfRight++;
+                    }
+                }
+                resultsTextArea.append(String.valueOf(numberOfRight) + " Digits correct: " + "\n");
+                resultsTextArea.append(String.valueOf(positionOfRight) + " In correct Position " + "\n");
+                resultsTextArea.append(String.valueOf("Try Again" + "\n\n"));
+                enteredCombo = "";
+                didgitsEntered = 0;
+            }
+        }
     }
 
     private void startStopButton(ActionEvent event)
@@ -225,6 +284,30 @@ public class SafeCracker extends JFrame
                     comboTextField[i].setVisible(false);
                 }
             }
+            secretCombo = "";
+            int j;
+            boolean uniqueDidgit;
+            for(int i = 0; i < numberofDigits; i++)
+            {
+                do
+                {
+                   j = random.nextInt(9) + 1;
+                   uniqueDidgit = true;
+                   if(i != 0)
+                   {
+                       for(int k = 0; k != i; k++)
+                       {
+                           if(String.valueOf(secretCombo.charAt(k)).equals(String.valueOf(j)))
+                           {
+                               uniqueDidgit = false;
+                           }
+                       }
+                   }
+                } while(!uniqueDidgit);
+                secretCombo += String.valueOf(j);
+            }
+            enteredCombo = "";
+            didgitsEntered = 0;
         }
         else
         {
