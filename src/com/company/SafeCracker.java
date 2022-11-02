@@ -12,7 +12,7 @@ public class SafeCracker extends JFrame
 {
     JPanel comboPanel = new JPanel();
     JPanel keyPanel = new JPanel();
-    JTextField[] comboTextField = new JTextField[4];
+    JTextField[] comboTextField = new JTextField[5];
     JButton[] keyButtons = new JButton[9];
     JPanel optionsPanel = new JPanel();
     ButtonGroup digitButtonGroup = new ButtonGroup();
@@ -68,7 +68,7 @@ public class SafeCracker extends JFrame
         gridBagConstraints.insets = new Insets(120, 0, 0, 0);
         banksafe.add(comboPanel, gridBagConstraints);
 
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 5; i++)
         {
             comboTextField[i] = new JTextField();
             comboTextField[i].setPreferredSize(new Dimension(32, 48));
@@ -139,6 +139,14 @@ public class SafeCracker extends JFrame
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         optionsPanel.add(fourDigitRadioButton, gridBagConstraints);
+
+        fiveDigitRadioButton.setText("Five Digits and Combination");
+        digitButtonGroup.add(fiveDigitRadioButton);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = gridBagConstraints.WEST;
+        optionsPanel.add(fiveDigitRadioButton, gridBagConstraints);
 
 
         buttonsPanel.setPreferredSize(new Dimension(200, 700));
@@ -226,6 +234,7 @@ public class SafeCracker extends JFrame
             comboTextField[1].setText("");
             comboTextField[2].setText("");
             comboTextField[3].setText("");
+            comboTextField[4].setText("");
         }
         enteredCombo += n;
         didgitsEntered++;
@@ -283,6 +292,7 @@ public class SafeCracker extends JFrame
             twoDigitRadioButton.setEnabled(false);
             threeDigitRadioButton.setEnabled(false);
             fourDigitRadioButton.setEnabled(false);
+            fiveDigitRadioButton.setEnabled(false);
             exitButton.setEnabled(true);
             setKeyButtons(true);
             resultsTextArea.setText("");
@@ -290,15 +300,17 @@ public class SafeCracker extends JFrame
                 numberofDigits = 2;
             } else if (threeDigitRadioButton.isSelected()) {
                 numberofDigits = 3;
-            } else {
+            } else if(fourDigitRadioButton.isSelected()){
                 numberofDigits = 4;
+            }else if(fiveDigitRadioButton.isSelected()){
+                numberofDigits = 5;
             }
             for (int i = 0; i < numberofDigits; i++) {
                 comboTextField[i].setVisible(true);
                 comboTextField[i].setText("");
             }
-            if (numberofDigits != 4) {
-                for (int i = numberofDigits; i < 4; i++) {
+            if (numberofDigits != 5) {
+                for (int i = numberofDigits; i < 5; i++) {
                     comboTextField[i].setVisible(false);
                 }
             }
@@ -333,6 +345,7 @@ public class SafeCracker extends JFrame
             twoDigitRadioButton.setEnabled(true);
             threeDigitRadioButton.setEnabled(true);
             fourDigitRadioButton.setEnabled(true);
+            fiveDigitRadioButton.setEnabled(true);
             exitButton.setEnabled(true);
             setKeyButtons(false);
         }
