@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.net.URL;
+import java.applet.*;
 
 
 
@@ -17,6 +19,7 @@ public class SafeCracker extends JFrame
     JRadioButton twoDigitRadioButton = new JRadioButton();
     JRadioButton threeDigitRadioButton = new JRadioButton();
     JRadioButton fourDigitRadioButton = new JRadioButton();
+    JRadioButton fiveDigitRadioButton = new JRadioButton();
     JPanel buttonsPanel = new JPanel();
     JButton startStopButton = new JButton();
     JButton exitButton = new JButton();
@@ -30,6 +33,8 @@ public class SafeCracker extends JFrame
     int didgitsEntered;
     int numberOfRight;
     int positionOfRight;
+    AudioClip badSound;
+    AudioClip goodSound;
 
     public SafeCracker()
     {
@@ -192,6 +197,16 @@ public class SafeCracker extends JFrame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((int)(0.5 * (screenSize.width - getWidth())), (int)(0.5 * (screenSize.height - getHeight())), getWidth(), getHeight());
         setKeyButtons(false);
+
+
+        try
+        {
+            badSound = Applet.newAudioClip(new URL("file:" + "./src/com/company/Sound/badsound.wav"));
+            goodSound = Applet.newAudioClip(new URL("file:" + "./src/com/company/Sound/goodsound.wav"));
+        }catch(Exception e)
+            {
+                System.out.println("error loading sound file");
+            }
     }
 
 
@@ -224,13 +239,16 @@ public class SafeCracker extends JFrame
             resultsTextArea.append("Entered: " + enteredCombo + "\n");
             if(enteredCombo.equals(secretCombo))
             {
+                goodSound.play();
                 startStopButton.doClick();
             }
             else
             {
+                badSound.play();
                 numberOfRight = 0;
                 for(int i = 0; i < numberofDigits; i++)
                 {
+
                     n = String.valueOf(enteredCombo.charAt(i));
                     for(int j = 0; j < numberofDigits; j++)
                     {
@@ -322,7 +340,7 @@ public class SafeCracker extends JFrame
 
     private void exitButton(ActionEvent event)
     {
-
+        System.exit(0);
     }
 
     private void setKeyButtons(boolean a)
